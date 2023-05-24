@@ -13,6 +13,24 @@ type ProductModel {
   image: String!
 }
 
+type IntentModel {
+  """The ID of the intent"""
+  user_id: ID!
+
+  """The products associated with the intent"""
+  products: [ProductModel!]!
+}
+
 type Query {
   products(skip: Int! = 0, take: Int! = 25): [ProductModel!]!
+}
+
+type Mutation {
+  createIntent(createIntentInput: CreateIntentInput!): IntentModel!
+}
+
+input CreateIntentInput {
+  """The ID of the intent"""
+  user_id: ID!
+  product_ids: [Float!]!
 }

@@ -6,6 +6,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { GraphQLModule } from '@nestjs/graphql';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { ProductsModule } from './products/products.module';
+import { IntentModule } from './intent/intent.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProductsModule } from './products/products.module';
       },
     }),
     ProductsModule,
+    IntentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
