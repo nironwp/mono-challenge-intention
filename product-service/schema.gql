@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type ProductModel {
+  id: ID!
+  title: String!
+  price: Float!
+  category: String!
+  description: String!
+  image: String!
+}
+
+type Query {
+  products(skip: Int! = 0, take: Int! = 25): [ProductModel!]!
+}
