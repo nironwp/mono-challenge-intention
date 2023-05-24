@@ -1,6 +1,6 @@
 import { IntentInterface } from '@core/domain/interfaces/intent.interface';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { ProductModel } from 'src/products/models/product.model';
+import { ProductModel } from '../../products/models/product.model';
 
 @ObjectType()
 export class IntentModel implements IntentInterface {
