@@ -22,11 +22,13 @@ type IntentProductInterface interface {
 
 type IntentProductServiceInterface interface {
 	Get(id string) (IntentProductInterface, error)
+	GetAll() ([]IntentProductInterface, error)
 	Create(product IntentProductInterface) (IntentProductInterface, error)
 }
 
 type IntentProductReader interface {
 	Get(id string) (IntentProductInterface, error)
+	GetAll() ([]IntentProductInterface, error)
 }
 
 type IntentProductWriter interface {

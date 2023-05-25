@@ -19,6 +19,42 @@ func NewIntentProductDb(db *mongo.Client, collection string, database string) *I
 	return &IntentProductDb{db: db, collection: collection, database: database}
 }
 
+func (itp *IntentProductDb) GetAll() ([]entities.IntentProductInterface, error) {
+	coll := itp.db.Database(itp.database).Collection(itp.collection)
+	cursor, err := coll.Find(context.Background(), bson.D{})
+	if err != nil {
+		return nil, err
+	}
+
+	var results []entities.IntentProduct
+
+	if err = cursor.All(context.Background(), &results); err != nil {
+		return nil, err
+	}
+
+	var resultsParsed []entities.IntentProductInterface
+	for _, result := range results {
+		resultParsedDto := entities.NewIntentProductDto{
+			Title:       result.Title,
+			Price:       result.Price,
+			Category:    result.Category,
+			Image:       result.Image,
+			ID:          result.ID,
+			Description: result.Description,
+		}
+
+		resultParsedProduct, err := entities.NewIntentProduct(resultParsedDto)
+
+		if err != nil {
+			return nil, err
+		}
+
+		resultsParsed = append(resultsParsed, resultParsedProduct)
+	}
+
+	return resultsParsed, nil
+}
+
 func (itp *IntentProductDb) Get(id string) (entities.IntentProductInterface, error) {
 
 	objectID, err := primitive.ObjectIDFromHex(id)

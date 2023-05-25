@@ -39,6 +39,16 @@ func (itp *IntentProductService) Create(product IntentProductInterface) (IntentP
 	return saved_product, nil
 }
 
+func (itp *IntentProductService) GetAll() ([]IntentProductInterface, error) {
+	intentProducts, err := itp.Persistence.GetAll()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return intentProducts, nil
+}
+
 func NewProductService(persistence IntentProductPersistenceInterface) *IntentProductService {
 	return &IntentProductService{Persistence: persistence}
 }

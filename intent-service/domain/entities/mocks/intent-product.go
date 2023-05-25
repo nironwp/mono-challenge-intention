@@ -5,6 +5,7 @@ package mock_entities
 
 import (
 	gomock "github.com/golang/mock/gomock"
+	primitive "go.mongodb.org/mongo-driver/bson/primitive"
 	reflect "reflect"
 	"intent-service/domain/entities"
 )
@@ -33,9 +34,9 @@ func (_m *MockIntentProductInterface) EXPECT() *MockIntentProductInterfaceMockRe
 }
 
 // GetId mocks base method
-func (_m *MockIntentProductInterface) GetId() int {
+func (_m *MockIntentProductInterface) GetId() primitive.ObjectID {
 	ret := _m.ctrl.Call(_m, "GetId")
-	ret0, _ := ret[0].(int)
+	ret0, _ := ret[0].(primitive.ObjectID)
 	return ret0
 }
 
@@ -140,6 +141,19 @@ func (_mr *MockIntentProductServiceInterfaceMockRecorder) Get(arg0 interface{}) 
 	return _mr.mock.ctrl.RecordCallWithMethodType(_mr.mock, "Get", reflect.TypeOf((*MockIntentProductServiceInterface)(nil).Get), arg0)
 }
 
+// GetAll mocks base method
+func (_m *MockIntentProductServiceInterface) GetAll() ([]entities.IntentProductInterface, error) {
+	ret := _m.ctrl.Call(_m, "GetAll")
+	ret0, _ := ret[0].([]entities.IntentProductInterface)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAll indicates an expected call of GetAll
+func (_mr *MockIntentProductServiceInterfaceMockRecorder) GetAll() *gomock.Call {
+	return _mr.mock.ctrl.RecordCallWithMethodType(_mr.mock, "GetAll", reflect.TypeOf((*MockIntentProductServiceInterface)(nil).GetAll))
+}
+
 // Create mocks base method
 func (_m *MockIntentProductServiceInterface) Create(product entities.IntentProductInterface) (entities.IntentProductInterface, error) {
 	ret := _m.ctrl.Call(_m, "Create", product)
@@ -187,6 +201,19 @@ func (_m *MockIntentProductReader) Get(id string) (entities.IntentProductInterfa
 // Get indicates an expected call of Get
 func (_mr *MockIntentProductReaderMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCallWithMethodType(_mr.mock, "Get", reflect.TypeOf((*MockIntentProductReader)(nil).Get), arg0)
+}
+
+// GetAll mocks base method
+func (_m *MockIntentProductReader) GetAll() ([]entities.IntentProductInterface, error) {
+	ret := _m.ctrl.Call(_m, "GetAll")
+	ret0, _ := ret[0].([]entities.IntentProductInterface)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAll indicates an expected call of GetAll
+func (_mr *MockIntentProductReaderMockRecorder) GetAll() *gomock.Call {
+	return _mr.mock.ctrl.RecordCallWithMethodType(_mr.mock, "GetAll", reflect.TypeOf((*MockIntentProductReader)(nil).GetAll))
 }
 
 // MockIntentProductWriter is a mock of IntentProductWriter interface
@@ -259,6 +286,19 @@ func (_m *MockIntentProductPersistenceInterface) Get(id string) (entities.Intent
 // Get indicates an expected call of Get
 func (_mr *MockIntentProductPersistenceInterfaceMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCallWithMethodType(_mr.mock, "Get", reflect.TypeOf((*MockIntentProductPersistenceInterface)(nil).Get), arg0)
+}
+
+// GetAll mocks base method
+func (_m *MockIntentProductPersistenceInterface) GetAll() ([]entities.IntentProductInterface, error) {
+	ret := _m.ctrl.Call(_m, "GetAll")
+	ret0, _ := ret[0].([]entities.IntentProductInterface)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAll indicates an expected call of GetAll
+func (_mr *MockIntentProductPersistenceInterfaceMockRecorder) GetAll() *gomock.Call {
+	return _mr.mock.ctrl.RecordCallWithMethodType(_mr.mock, "GetAll", reflect.TypeOf((*MockIntentProductPersistenceInterface)(nil).GetAll))
 }
 
 // Save mocks base method

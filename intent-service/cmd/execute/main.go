@@ -49,6 +49,14 @@ func main() {
 		Persistence: dbmongo,
 	}
 
+	results, err := service.GetAll()
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Results", results)
+
 	webserver := cmd.MakeNewWebServer(service)
 
 	webserver.Server()
