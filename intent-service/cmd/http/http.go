@@ -1,4 +1,4 @@
-package cmd
+package httpport
 
 import (
 	"fmt"
@@ -14,10 +14,10 @@ import (
 )
 
 type WebServer struct {
-	Service entities.IntentProductService
+	Service entities.IntentService
 }
 
-func MakeNewWebServer(service entities.IntentProductService) *WebServer {
+func MakeNewWebServer(service entities.IntentService) *WebServer {
 	return &WebServer{
 		Service: service,
 	}
@@ -30,7 +30,7 @@ func (w WebServer) Server() {
 		negroni.NewLogger(),
 	)
 
-	handler.MakeIntentProductHandler(r, n, w.Service)
+	handler.MakeIntentHandler(r, n, w.Service)
 
 	http.Handle("/", r)
 	server := &http.Server{

@@ -1,0 +1,40 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+
+type IntentProduct {
+  id: ID!
+  title: String
+  price: Float
+  category: String
+  description: String
+  image: String
+}
+
+
+type Intent {
+  user_id: String
+  items: [IntentProduct]
+}
+
+input NewIntentProduct {
+  title: String
+  price: Float
+  category: String
+  description: String
+  image: String
+}
+
+input NewIntent {
+  user_id: String
+  items: [NewIntentProduct]
+}
+
+type Query {
+  listIntents: [Intent]
+}
+
+type Mutation {
+  createIntent(input: NewIntent!): Intent
+}

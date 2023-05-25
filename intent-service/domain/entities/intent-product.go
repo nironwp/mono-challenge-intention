@@ -41,12 +41,12 @@ type IntentProductPersistenceInterface interface {
 }
 
 type IntentProduct struct {
-	ID          primitive.ObjectID `bson:"_id" valid:"required"`
-	Title       string             `bson:"title" valid:"required"`
-	Price       float64            `bson:"price" valid:"required,float"`
-	Category    string             `bson:"category" valid:"required"`
-	Description string             `bson:"description" valid:"required"`
-	Image       string             `bson:"image" valid:"required"`
+	ID          primitive.ObjectID `bson:"_id"`
+	Title       string             `bson:"title" valid:"required" json:"title"`
+	Price       float64            `bson:"price" valid:"required,float" json:"price"`
+	Category    string             `bson:"category" valid:"required" json:"category"`
+	Description string             `bson:"description" valid:"required" json:"description"`
+	Image       string             `bson:"image" valid:"required" json:"image"`
 }
 
 func (ip *IntentProduct) IsValid() error {

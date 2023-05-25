@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 	db "intent-service/adapters/db/mongo"
-	"intent-service/cmd"
 	"intent-service/domain/entities"
 	"log"
 	"os"
+
+	graphserver "intent-service/cmd/graph-server"
 
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
@@ -23,6 +24,18 @@ func main() {
 	uri := os.Getenv("MONGODB_URI")
 	if uri == "" {
 		log.Fatal("You must set your 'MONGODB_URI' environmental variable. See\n\t https://www.mongodb.com/docs/drivers/go/current/usage-examples/#environment-variable")
+	}
+
+	database_name := os.Getenv("MONGODB_DATABASE")
+
+	if database_name == "" {
+		log.Fatal("You must set your 'MONGODB_DATABASE' environmental variable. See\n\t https://www.mongodb.com/docs/drivers/go/current/usage-examples/#environment-variable")
+	}
+
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("You must set your 'PORT' environmental variable.")
 	}
 
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
@@ -43,21 +56,17 @@ func main() {
 		panic(err)
 	}
 	fmt.Println("Pinged your deployment. You successfully connected to MongoDB!")
-	dbmongo := db.NewIntentProductDb(client, "r", "r")
+	dbmongo, err := db.NewIntentDb(client, "intents", database_name)
 
-	service := entities.IntentProductService{
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	service := entities.IntentService{
 		Persistence: dbmongo,
 	}
 
-	results, err := service.GetAll()
+	graphServer := graphserver.NewGraphServer(port, service)
 
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("Results", results)
-
-	webserver := cmd.MakeNewWebServer(service)
-
-	webserver.Server()
+	graphServer.Start()
 }
