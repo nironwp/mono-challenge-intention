@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  intent-service:
+    build: .
+    container_name: intent-service
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/go/src/
