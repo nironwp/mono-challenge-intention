@@ -46,15 +46,31 @@ func (r *mutationResolver) CreateIntent(ctx context.Context, input model.NewInte
 		return nil, err
 	}
 
-	_, err = r.Service.Create(intent)
+	created_it, err := r.Service.Create(intent)
 
 	if err != nil {
 		return nil, err
 	}
 
 	intent_model := model.Intent{
-		Items:  []*model.IntentProduct{},
 		UserID: input.UserID,
+	}
+
+	for _, item := range created_it.GetItens() {
+		var title = item.GetTitle()
+		var price = item.GetPrice()
+		var category = item.GetCategory()
+		var image = item.GetImage()
+		var description = item.GetDescription()
+
+		intent_model.Items = append(intent_model.Items, &model.IntentProduct{
+			ID:          item.GetId().Hex(),
+			Title:       &title,
+			Price:       &price,
+			Category:    &category,
+			Image:       &image,
+			Description: &description,
+		})
 	}
 
 	return &intent_model, nil
@@ -62,7 +78,41 @@ func (r *mutationResolver) CreateIntent(ctx context.Context, input model.NewInte
 
 // ListIntents is the resolver for the listIntents field.
 func (r *queryResolver) ListIntents(ctx context.Context) ([]*model.Intent, error) {
-	panic(fmt.Errorf("not implemented: ListIntents - listIntents"))
+	listed_intents, err := r.Service.GetAll()
+
+	if err != nil {
+		return nil, err
+	}
+
+	var intents []*model.Intent
+
+	for _, intent := range listed_intents {
+		var user_id = intent.GetUserId()
+		intent_model := model.Intent{
+			UserID: &user_id,
+		}
+
+		for _, item := range intent.GetItens() {
+			var title = item.GetTitle()
+			var price = item.GetPrice()
+			var category = item.GetCategory()
+			var image = item.GetImage()
+			var description = item.GetDescription()
+
+			intent_model.Items = append(intent_model.Items, &model.IntentProduct{
+				ID:          item.GetId().Hex(),
+				Title:       &title,
+				Price:       &price,
+				Category:    &category,
+				Image:       &image,
+				Description: &description,
+			})
+		}
+
+		intents = append(intents, &intent_model)
+	}
+
+	return intents, nil
 }
 
 // Mutation returns MutationResolver implementation.
