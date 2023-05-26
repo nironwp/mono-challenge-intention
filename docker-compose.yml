@@ -6,17 +6,29 @@ services:
     container_name: product
     ports:
       - "8080:3000"
-    volumes:
-      - ./product-service:/usr/src/app
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - MONGO_URL=mongodb://mongo:27017/product-service
+      - GRAPHQL_ENDPOINT=http://intent-service:3001/query
     depends_on:
-      - mongo
+      - intent-service
     networks:
       - app-network
-  
+
+  intent-service:
+    build: ./intent-service
+    container_name: intent
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./intent-service:/usr/src/app
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/MONGODB_DATABASE
+      - PORT=3001
+      - MONGODB_DATABASE=<your_mongodb_database_name>
+    networks:
+      - app-network
+
   mongo:
     image: mongo
     ports:
@@ -25,8 +37,6 @@ services:
       - ./data:/data/db
     networks:
       - app-network
-
-
 
 networks:
   app-network:
