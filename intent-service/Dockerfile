@@ -1,20 +1,27 @@
-FROM golang:1.18
+FROM golang:1.18.1-alpine AS builder
 
-WORKDIR /go/src
+# All these steps will be cached
+RUN mkdir /app
+WORKDIR /app
 
-ENV PATH="/go/bin:${PATH}"
+# Copy go.mod and go.sum files to workspace
+COPY go.mod go.sum ./
 
-RUN go get -u github.com/spf13/cobra@latest && \
-    go install github.com/golang/mock/mockgen@v1.5.0 && \
-    go install github.com/spf13/cobra-cli@latest
+# Get dependencies, will also be cached if you don't change mod/sum
+RUN go mod download
 
+RUN go mod tidy
 
-RUN apt-get update && apt-get install sqlite3 -y
+# Copy the source code
+COPY . .
 
-RUN usermod -u 1000 www-data
-RUN mkdir -p /var/www/.cache
-RUN chown -R www-data:www-data /go
-RUN chown -R www-data:www-data /var/www/.cache
-USER www-data
+# Build the binary
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o intent_service ./cmd/execute
 
-CMD ["tail", "-f", "/dev/null"]
+FROM scratch
+
+COPY --from=builder /app/intent_service /intent_service
+
+EXPOSE 3001
+# CMD
+CMD ["/intent_service"]

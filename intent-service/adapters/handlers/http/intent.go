@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"intent-service/domain/entities"
 	"net/http"
 
@@ -34,8 +33,6 @@ func createIntent(service entities.IntentService) http.Handler {
 
 			return
 		}
-
-		fmt.Println(intentDto.User_id)
 
 		for idx, _ := range intentDto.Itens {
 			intentDto.Itens[idx].ID = primitive.NewObjectID()

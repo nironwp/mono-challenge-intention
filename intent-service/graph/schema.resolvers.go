@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 	"intent-service/domain/entities"
 	"intent-service/graph/model"
 
@@ -37,8 +36,6 @@ func (r *mutationResolver) CreateIntent(ctx context.Context, input model.NewInte
 
 		intentDto.Itens = append(intentDto.Itens, *intentProduct)
 	}
-
-	fmt.Println("Dto and itens", intentDto, intentDto.Itens)
 
 	intent, err := entities.NewIntent(intentDto)
 

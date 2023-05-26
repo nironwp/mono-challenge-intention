@@ -7,6 +7,8 @@ export class IntentModel implements IntentInterface {
   @Field(() => ID, { description: 'The ID of the intent' })
   user_id: string;
 
-  @Field(() => [ProductModel], { description: 'The products associated with the intent' })
+  @Field(() => [ProductModel], {
+    description: 'The products associated with the intent',
+  })
   products: ProductModel[];
 }

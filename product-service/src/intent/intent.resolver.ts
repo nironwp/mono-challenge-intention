@@ -8,8 +8,9 @@ export class IntentResolver {
   constructor(private readonly intentService: IntentService) {}
 
   @Mutation(() => IntentModel)
-  createIntent(@Args('createIntentInput') createIntentInput: CreateIntentInput) {
+  createIntent(
+    @Args('createIntentInput') createIntentInput: CreateIntentInput,
+  ) {
     return this.intentService.create(createIntentInput);
   }
-
 }

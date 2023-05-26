@@ -1,9 +1,15 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import fastifyHelmet from '@fastify/helmet';
 import fastifyCsrf from '@fastify/csrf-protection';
+import 'dotenv/config';
+import { ConfigService } from '@nestjs/config';
+
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
@@ -34,10 +40,11 @@ async function bootstrap() {
   });
   app.enableCors();
   await app.register(fastifyCsrf);
- await app.register(fastifyHelmet, {
-   contentSecurityPolicy: false,
- });
-  await app.listen(3000, '0.0.0.0');
+  const configService = app.get(ConfigService);
+  await app.register(fastifyHelmet, {
+    contentSecurityPolicy: false,
+  });
+  await app.listen(configService.get('PORT'), '0.0.0.0');
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

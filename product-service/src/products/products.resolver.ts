@@ -3,7 +3,6 @@ import { ProductsService } from './products.service';
 import { ProductModel } from './models/product.model';
 import { RecipesArgs } from './dto/products.args';
 
-
 @Resolver(() => ProductModel)
 export class ProductsResolver {
   constructor(private readonly productsService: ProductsService) {}

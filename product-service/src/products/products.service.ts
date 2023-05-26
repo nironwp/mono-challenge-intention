@@ -6,15 +6,18 @@ import { RecipesArgs } from './dto/products.args';
 
 @Injectable()
 export class ProductsService {
-  async findAll(args:RecipesArgs):Promise<ProductModel[]> {
-    const products = (await axios.get<ProductInterface[]>('https://fakestoreapi.com/products?limit='+args.take)).data
+  async findAll(args: RecipesArgs): Promise<ProductModel[]> {
+    const products = (
+      await axios.get<ProductInterface[]>(
+        'https://fakestoreapi.com/products?limit=' + args.take,
+      )
+    ).data;
 
-    
     return products.slice(args.skip).map((product) => {
       const product_model: ProductModel = {
         ...product,
-      }
-      return product_model
-    })
+      };
+      return product_model;
+    });
   }
 }

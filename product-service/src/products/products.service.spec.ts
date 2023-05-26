@@ -16,10 +16,10 @@ describe('ProductsService', () => {
     expect(service).toBeDefined();
   });
 
-  it("Should return a list of products", async () => {
-    const response = await service.findAll({take: 5, skip: 0})
+  it('Should return a list of products', async () => {
+    const response = await service.findAll({ take: 5, skip: 0 });
 
-    expect(response).toBeDefined()
-    expect(response.length).toBe(5)
-  })
+    expect(response).toBeDefined();
+    expect(response.length).toBe(5);
+  });
 });

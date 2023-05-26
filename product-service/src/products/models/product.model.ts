@@ -3,7 +3,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 
 @ObjectType()
 export class ProductModel implements ProductInterface {
-  @Field(type => ID)
+  @Field((type) => ID)
   id: number;
 
   @Field()
@@ -14,7 +14,7 @@ export class ProductModel implements ProductInterface {
 
   @Field()
   category: string;
-  
+
   @Field()
   description: string;
 

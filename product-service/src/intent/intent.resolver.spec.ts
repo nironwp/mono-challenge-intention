@@ -17,15 +17,15 @@ describe('IntentResolver', () => {
     expect(resolver).toBeDefined();
   });
 
-  it("Should Create a intent", async () => {
+  it('Should Create a intent', async () => {
     const createIntent = {
       product_ids: [1, 2, 3],
-      user_id: 'here-user-id'
-    }
-    const response = await resolver.createIntent(createIntent)
+      user_id: 'here-user-id',
+    };
+    const response = await resolver.createIntent(createIntent);
 
-    expect(response).toBeDefined()
-    expect(response.user_id).toBe(createIntent.user_id)
-    expect(response.products.length).toBe(createIntent.product_ids.length)
-  })
+    expect(response).toBeDefined();
+    expect(response.user_id).toBe(createIntent.user_id);
+    expect(response.products.length).toBe(createIntent.product_ids.length);
+  });
 });

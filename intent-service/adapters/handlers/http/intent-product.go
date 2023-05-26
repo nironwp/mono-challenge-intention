@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"intent-service/domain/entities"
 	"net/http"
 
@@ -33,7 +32,6 @@ func createProduct(service entities.IntentProductService) http.Handler {
 
 		productDto.ID = primitive.NewObjectID()
 
-		fmt.Println(productDto)
 		product_make, err := entities.NewIntentProduct(productDto)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
