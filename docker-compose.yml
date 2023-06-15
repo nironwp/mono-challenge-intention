@@ -23,9 +23,9 @@ services:
     volumes:
       - ./intent-service:/usr/src/app
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/MONGODB_DATABASE
+      - MONGODB_URI=mongodb://mongo:27017/
       - PORT=3001
-      - MONGODB_DATABASE=<your_mongodb_database_name>
+      - MONGODB_DATABASE=lelab
     networks:
       - app-network
 

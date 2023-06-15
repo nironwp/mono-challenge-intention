@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, } from '@nestjs/graphql';
 import { IntentService } from './intent.service';
 import { IntentModel } from './models/intent.model';
 import { CreateIntentInput } from './dto/create-intent.input';

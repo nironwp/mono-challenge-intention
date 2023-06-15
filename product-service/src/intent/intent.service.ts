@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateIntentInput } from './dto/create-intent.input';
 import axios from 'axios';
 import { ProductInterface } from '@core/domain/interfaces/product.interface';
-import { GraphQLClient } from 'graphql-request';
 import { GraphqlService } from 'src/graphql/graphql.service';
 
 @Injectable()
